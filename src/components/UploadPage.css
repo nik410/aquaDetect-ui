@@ -1,0 +1,68 @@
+.upload-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f0f4f8;
+  color: #333;
+  background-image: url("/background.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.upload-header {
+  background: #4a90e2;
+  padding:20px;
+  width: 100%;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: left;
+  display: block;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  background-image: url("/background.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.upload-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  margin: 20px auto;
+  max-width: 400px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  flex-direction: column;
+}
+
+.upload-icon {
+  font-size: 5rem;
+  color: #4a90e2;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.upload-icon:hover {
+  color: #357ABD;
+}
+
+.upload-note {
+  margin-top: 15px;
+  color: #666;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.preview-image {
+  margin-top: 25px;
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  object-fit: contain;
+}

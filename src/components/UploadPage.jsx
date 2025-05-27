@@ -7,6 +7,7 @@ export default function UploadPage() {
   const [previewSrc, setPreviewSrc] = useState('');
   const [selectedFile, setSelectedFile] = useState(null); // State to hold the actual file object
   const fileInputRef = useRef(null);
+const [processedImage, setProcessedImage] = useState(null);
 
   // States for displaying messages via the Modal component
   const [modalMessage, setModalMessage] = useState(null);
@@ -68,12 +69,20 @@ export default function UploadPage() {
     try {
       // Make sure this URL matches where your Flask backend is running
       // By default, Flask runs on http://localhost:5000
-      const response = await fetch('http://localhost:5000/upload-image', {
+      const response1 = await fetch('http://127.0.0.1:5000/', {
+        method: 'GET',
+      });
+      console.log("fetch")
+
+      const response = await fetch('http://127.0.0.1:5000/uploadimg', {
         method: 'POST',
         body: formData, // Send FormData directly
       });
 
       const data = await response.json(); // Parse the JSON response from Flask
+      const base64 = data.processing_details.display_image;
+      const imageSrc = `data:image/jpeg;base64,${base64}`;
+    setProcessedImage(imageSrc);
 
       if (response.ok) { // Check if the HTTP status code is 2xx (success)
         setModalTitle("Upload Successful");
@@ -148,6 +157,17 @@ export default function UploadPage() {
           Analyze Image
         </button>
       </main>
+      {processedImage && (
+  <div style={{ marginTop: '20px', textAlign: 'center' }}>
+    <h2>Processed Image</h2>
+    <img
+      src={processedImage}
+      alt="Processed result"
+      style={{ maxWidth: '100%', height: 'auto', border: '2px solid #4a90e2', borderRadius: '8px' }}
+    />
+  </div>
+)}
+
 
       {/* Modal component for showing messages */}
       {modalMessage && (

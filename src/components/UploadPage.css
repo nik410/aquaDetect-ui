@@ -1,3 +1,51 @@
+/* UploadPage.css */
+
+/* Basic styling for the button-analyse class */
+.button-analyse {
+  /* Spacing from the element above it */
+  margin-top: 25px; /* Adjust this value as needed for desired spacing */
+  margin-bottom: 15px; /* Optional: Add some space below if other elements follow */
+
+  /* General button styling for aesthetics */
+  padding: 12px 25px; /* Vertical and horizontal padding */
+  font-size: 1.1rem; /* Slightly larger text */
+  font-weight: 600; /* Bolder text */
+  color: white; /* White text color */
+  background-color: #4a90e2; /* A pleasant blue color */
+  border: none; /* No border */
+  border-radius: 8px; /* Rounded corners */
+  cursor: pointer; /* Indicate it's clickable */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions for hover/active states */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  display: block; /* Make it a block element to control its own margins */
+  width: fit-content; /* Adjust width to content */
+  margin-left: auto; /* Center the button horizontally */
+  margin-right: auto; /* Center the button horizontally */
+}
+
+/* Hover effect */
+.button-analyse:hover {
+  background-color: #357abd; /* Slightly darker blue on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+}
+
+/* Active (click) effect */
+.button-analyse:active {
+  background-color: #2a6496; 
+  transform: translateY(0); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* Smaller shadow when clicked */
+}
+
+/* Disabled state styling */
+.button-analyse:disabled {
+  background-color: #cccccc; /* Grey background when disabled */
+  color: #666666; /* Darker text color */
+  cursor: not-allowed; /* Change cursor to indicate it's not clickable */
+  box-shadow: none; /* No shadow when disabled */
+  transform: none; /* No transform when disabled */
+  opacity: 0.7; /* Slightly transparent */
+}
+
 .upload-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;

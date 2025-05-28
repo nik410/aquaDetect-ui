@@ -11,6 +11,8 @@ export default function UploadPage() {
   // States for displaying messages via the Modal component
   const [modalMessage, setModalMessage] = useState(null);
   const [modalTitle, setModalTitle] = useState('');
+  const [modalImage, setModalImage] = useState(null);
+  const [modalResult, setModalResult] = useState('');
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -73,11 +75,23 @@ export default function UploadPage() {
         body: formData, // Send FormData directly
       });
 
+  
+
       const data = await response.json(); // Parse the JSON response from Flask
 
+      
+
       if (response.ok) { // Check if the HTTP status code is 2xx (success)
+        const pictureBase64 = data.processing_details.display_image;
+        setModalImage(pictureBase64);
+
+        const resultString = data.processing_details.result;
+        setModalResult(resultString);
+
         setModalTitle("Upload Successful");
-        setModalMessage(data.message);
+
+        setModalMessage(data.message + `\n\n` +"Here are the results : \n\n ");
+
         // Clear preview and selected file after successful upload
         setPreviewSrc('');
         setSelectedFile(null);
@@ -117,7 +131,7 @@ export default function UploadPage() {
           title="Click to upload image"
           className="upload-icon"
         >
-          &#128247;
+         &#x1F4E4;
         </div>
         <input
           type="file"
@@ -140,9 +154,8 @@ export default function UploadPage() {
         )}
 
         {/* New button to trigger the upload to the backend */}
-        <button
-          onClick={handleImageUpload}
-          className="upload-note"
+        <button className='button-analyse'
+          onClick={handleImageUpload}          
           disabled={!selectedFile} 
         >
           Analyze Image
@@ -151,7 +164,7 @@ export default function UploadPage() {
 
       {/* Modal component for showing messages */}
       {modalMessage && (
-        <Modal title={modalTitle} message={modalMessage} onClose={() => setModalMessage(null)} />
+        <Modal title={modalTitle} message={modalMessage} image={modalImage} resultsMetrics={modalResult} onClose={() => setModalMessage(null)} />
       )}
     </div>
   );

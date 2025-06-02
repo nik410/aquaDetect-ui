@@ -15,6 +15,39 @@ const [processedImage, setProcessedImage] = useState(null);
   const [modalImage, setModalImage] = useState(null);
   const [modalResult, setModalResult] = useState('');
 
+  const [isLoading, setIsLoading] = useState(false); //loading state
+
+  const [chatOpen, setChatOpen] = useState(false);
+const [chatInput, setChatInput] = useState('');
+const [chatMessages, setChatMessages] = useState([
+  { type: 'bot', text: 'Hi! How can I assist you with the image upload or results?' }
+]);
+
+// chatbot
+
+const toggleChat = () => {
+  setChatOpen(!chatOpen);
+};
+
+const handleChatSubmit = (e) => {
+  e.preventDefault();
+  if (!chatInput.trim()) return;
+
+  setChatMessages([...chatMessages, { type: 'user', text: chatInput }]);
+  setChatInput('');
+
+  // Simulate bot response (static since no backend)
+  setTimeout(() => {
+    setChatMessages(prev => [
+      ...prev,
+      { type: 'user', text: chatInput },
+      { type: 'bot', text: "I'm just a demo bot for now. Real responses coming soon!" }
+    ]);
+  }, 500);
+};
+
+
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (!file) {
@@ -63,6 +96,8 @@ const [processedImage, setProcessedImage] = useState(null);
       setModalMessage("Please select an image file to upload first.");
       return;
     }
+
+    setIsLoading(true); // Start loading
 
     const formData = new FormData();
     // 'image' is the key that your Flask backend is looking for (request.files['image'])
@@ -118,6 +153,9 @@ const [processedImage, setProcessedImage] = useState(null);
       setModalTitle("Network Error");
       setModalMessage('Could not connect to the backend. Please ensure your Flask server is running.');
     }
+    finally {
+      setIsLoading(false); // Stop loading
+    }
   };
 
 
@@ -130,6 +168,53 @@ const [processedImage, setProcessedImage] = useState(null);
         color: 'black',
         textAlign: 'center'
       }}>Upload your image</h1>
+
+
+{isLoading && (
+  <div className="loading-overlay">
+    <div className="loading-spinner" />
+    <p style={{ textAlign: 'center', color: '#555', marginTop: '10px' }}>
+      Model is processing... Please wait.
+    </p>
+  </div>
+)}
+
+
+<div className="chatbot-container">
+  {chatOpen ? (
+    <div className="chatbox">
+      <div className="chatbox-header">
+        AquaBot 🤖
+        <button onClick={toggleChat} className="chatbox-close">×</button>
+      </div>
+      <div className="chatbox-messages">
+        {chatMessages.map((msg, index) => (
+          <div key={index} className={`chat-msg ${msg.type}`}>
+            {msg.text}
+          </div>
+        ))}
+      </div>
+      <form onSubmit={handleChatSubmit} className="chatbox-input">
+        <input
+          type="text"
+          value={chatInput}
+          onChange={(e) => setChatInput(e.target.value)}
+          placeholder="Type a message..."
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  ) : (
+    <button className="chatbot-toggle" onClick={toggleChat}>
+      💬 Chat
+    </button>
+  )}
+</div>
+
+
+
+
+
       <main className="upload-main">
         <div
           role="button"
